@@ -63,6 +63,37 @@ jQuery(document).ready(function($) {
 			$cpWrap.remove();
 			$el.wpColorPicker();
 		});
+
+		var $media_selector = $('.kc-media-list', obj.nuItem);
+		if ( $media_selector.length > 0 ) {
+
+			//get highest id of the current media
+			var highest_id = 0;
+			$( '.kc-media-list', obj.block ).each(function() {
+				var split_id = $(this).attr('id').split('-');
+				var id = split_id[1];
+				if ( id > highest_id ) {
+					highest_id = id;
+				}
+			});
+
+			//could be more than one media
+			$media_selector.each(function() {
+				var $el = $(this);
+
+				var media_id = $el.attr('id');//this is the same id of the original
+				var split_media_id = media_id.split('-');
+				split_media_id[1] = parseInt(highest_id)+1;
+				var new_media_id = split_media_id.join('-');
+
+				//assign new id to the selector and the button
+				$el.attr('id', new_media_id);
+				$el.parent().find('.kc-media-select').attr('data-fieldid', new_media_id);
+
+				//add to the mediafields object
+				kcSettings.mediaFields[new_media_id] = kcSettings.mediaFields[media_id];
+			});
+		}
 	});
 
 	// Sort
