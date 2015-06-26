@@ -67,11 +67,11 @@ jQuery(document).ready(function($) {
 		var $media_selector = $('.kc-media-list', obj.nuItem);
 		if ( $media_selector.length > 0 ) {
 
-			//get highest id of the current media
+			//get highest id of the current multiinput
 			var highest_id = 0;
 			$( '.kc-media-list', obj.block ).each(function() {
 				var split_id = $(this).attr('id').split('-');
-				var id = split_id[1];
+				var id = parseInt(split_id[1]);
 				if ( id > highest_id ) {
 					highest_id = id;
 				}
@@ -83,7 +83,7 @@ jQuery(document).ready(function($) {
 
 				var media_id = $el.attr('id');//this is the same id of the original
 				var split_media_id = media_id.split('-');
-				split_media_id[1] = parseInt(highest_id)+1;
+				split_media_id[1] = highest_id + 1;
 				var new_media_id = split_media_id.join('-');
 
 				//assign new id to the selector and the button
